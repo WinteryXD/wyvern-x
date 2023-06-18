@@ -1,0 +1,204 @@
+
+
+-- // Move o GUI para PlayerGui \\ --
+
+local gui = game:GetService("CoreGui"):FindFirstChild("FluxLib")
+
+local player = game.Players.LocalPlayer
+local coreGui = game:GetService("CoreGui")
+local playerGui = player.PlayerGui
+
+local gui = coreGui:FindFirstChild("FluxLib")
+
+if gui then
+    gui.Parent = playerGui
+    print("O GUI FluxLib foi movido para o PlayerGui.")
+else
+    print("O GUI FluxLib não foi encontrado no CoreGui.")
+end
+
+-- // Destroi caso ja esteja em execuçao \\ --
+
+if gui then
+    gui:Destroy(999)
+    print("O GUI FluxLib foi destruído.")
+else
+    print("O GUI FluxLib não foi encontrado.")
+end
+
+
+
+
+local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")() -- Self explaining
+
+_G.closeBind = Enum.KeyCode.P
+
+local win = lib:Window("Wyvern X", "(Premium)", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
+
+local farmtab = win:Tab("Farming", "http://www.roblox.com/asset/?id=6023426915") -- Logo is the link
+
+
+farmtab:Toggle("Auto-Farm", "Automatically farms the best unlocked area of the Diamond Mine.", false, function(uwu) -- t can be anything, choose false or true for what is the value in default
+
+	
+if uwu then
+	_G.AutoFarm = true
+    while uwu do
+        
+        _G.Area = areatext
+
+        local Client = require(game.ReplicatedStorage.Library.Client)
+        local Library = require(game.ReplicatedStorage.Library)
+        local Orbs = getsenv(game.Players.LocalPlayer.PlayerScripts.Scripts.Game.Orbs)
+
+        debug.setupvalue(Client.Network.Invoke, 1, function() return true end)
+        debug.setupvalue(Client.Network.Fire, 1, function() return true end)
+
+        function GetCoins(Area)
+            local Coins = {}
+            for i,v in next, Client.Network.Invoke('Get Coins') do 
+                if v.a == Area then 
+                    Coins[i] = v
+                end 
+            end 
+            return Coins
+        end 
+
+        function GetPets()
+            return Client.PetCmds.GetEquipped() 
+        end 
+
+        while uwu do 
+            local Pets = GetPets()
+            local Coins = GetCoins('Mystic Mine' or 'Cyber Cavern')
+            for i,v in next, Coins do
+                if workspace.__THINGS.Coins:FindFirstChild(i) and _G.AutoFarm then 
+                    for _,Pet in next, Pets do 
+                        spawn(function()
+                            if _G.AutoFarm then
+                                Client.Network.Invoke('Join Coin', i, {Pet.uid})
+                                Client.Network.Fire('Farm Coin', i, Pet.uid)
+                            
+                            else
+                            print("Auto-Farm: Off")
+                            end
+                        end)
+                        task.wait(0.00001)
+            end
+        end
+    end
+end end
+else
+_G.AutoFarm = false
+end
+
+
+
+end)
+
+
+
+
+
+
+
+
+
+
+
+farmtab:Toggle("Auto Collect Lootbags", "Collects Lootbags automatically.", false, function(t) -- t can be anything, choose false or true for what is the value in default
+	lootbagslol = t
+    
+        if lootbagslol then
+            while lootbagslol do
+                wait(0.00000001) -- Espera 1 segundo antes de executar o próximo loop
+            
+                -- Encontra o jogador
+                local player = game.Players.LocalPlayer
+
+                -- Verifica se o jogador existe e possui um personagem
+                if player and player.Character then
+                    -- Encontra todas as lootbags em game.Workspace.__THINGS.Lootbags
+                    local lootbags = game.Workspace.__THINGS.Lootbags:GetDescendants()
+            
+                    -- Loop através de cada lootbag encontrada
+                    for _, lootbag in ipairs(lootbags) do
+                        -- Verifica se a lootbag é uma parte
+                        if lootbag:IsA("BasePart") then
+                            -- Teleporta a lootbag para o jogador
+                            lootbag.Transparency = 1
+                            lootbag.CFrame = player.Character.HumanoidRootPart.CFrame
+                        end
+                    end
+                end
+            end
+        else
+            lootbagslol = false
+        end
+    
+end)
+
+
+
+
+farmtab:Toggle("Auto Collect Orbs", "Collects Orbs automatically.", false, function(orbslol) -- t can be anything, choose false or true for what is the value in default
+
+    if orbslol then
+        while orbslol do
+            wait(0.0000000001) -- Espera 1 segundo antes de executar o próximo loop
+        
+            -- Encontra o jogador
+            local player = game.Players.LocalPlayer
+        
+            -- Verifica se o jogador existe e possui um personagem
+            if player and player.Character then
+                -- Encontra todas as orbs em game.Workspace.__THINGS.Orbs
+                local orbs = game.Workspace.__THINGS.Orbs:GetDescendants()
+        
+                -- Loop através de cada orb encontrada
+                for _, orb in ipairs(orbs) do
+                    -- Verifica se a orb é uma parte
+                    if orb:IsA("BasePart") then
+                        -- Teleporta a orb para o jogador
+                        orb.CFrame = player.Character.HumanoidRootPart.CFrame
+                    end
+                end
+            end
+        end
+    else
+        orbslol = false
+    end
+    
+end)
+
+
+farmtab:Line()
+
+local extrastab = win:Tab("Extras", "http://www.roblox.com/asset/?id=6023426915")
+
+extrastab:Toggle("Anti-AFK", "Prevents you from getting kicked by jumping every 60 seconds.", false, function(antiafk) -- t can be anything, choose false or true for what is the value in default
+
+if antiafk then
+afk = true
+	while afk do
+
+-- Obtenha o personagem do jogador
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local humanoid = character:WaitForChild("Humanoid")
+
+while afk do
+    -- Faça o personagem pular
+    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
+    
+    -- Aguarde 1 segundo
+    wait(60)
+end
+end
+else
+afk = false
+end
+end)
+
+
+   
