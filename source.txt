@@ -42,6 +42,8 @@ local farmtab = win:Tab("Farming", "http://www.roblox.com/asset/?id=6023426915")
 
 local guistab = win:Tab("GUIs", "http://www.roblox.com/asset/?id=6023426915")
 
+local visualstab = win:Tab("Visuals", "http://www.roblox.com/asset/?id=6023426915")
+
 farmtab:Toggle("Auto-Farm", "Automatically farms the best unlocked area of the Diamond Mine.", false, function(uwu) -- t can be anything, choose false or true for what is the value in default
 
 	
@@ -338,4 +340,30 @@ guistab:Button("Open Enchanter", "Opens the Enchanter GUI.", function() -- Descr
 	else
 		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
 		end
+end)
+
+
+-- // VISUALS TAB \\ -- 
+
+
+visualstab:Button("Crash Server", "Crashes the server (visual).", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+
+-- GUI que será movido para o CoreGUI
+local guiToMove = game:GetService("ReplicatedFirst").SoftShutdownLocal.ShutdownUI
+
+-- Tempo em segundos antes de realizar o rejoin
+local tempoEspera = 5
+
+-- Obtém o CoreGui
+local coreGuiService = game:GetService("CoreGui")
+
+-- Move o GUI para o CoreGUI
+guiToMove.Parent = coreGuiService
+
+-- Aguarda o tempo de espera
+wait(tempoEspera)
+
+-- Realiza o rejoin no jogador
+game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+
 end)
