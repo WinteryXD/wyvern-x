@@ -1,4 +1,5 @@
-print('teste')
+loadstring(game:HttpGet("https://raw.githubusercontent.com/WinteryXD/wyvern-x/main/thing.lua"))()
+
 
 -- // Move o GUI para PlayerGui \\ --
 
