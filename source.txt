@@ -1,4 +1,4 @@
-
+print('teste')
 
 -- // Move o GUI para PlayerGui \\ --
 
@@ -144,7 +144,8 @@ end)
 farmtab:Toggle("Auto Collect Orbs", "Collects Orbs automatically.", false, function(orbslol) -- t can be anything, choose false or true for what is the value in default
 
     if orbslol then
-        while orbslol do
+    orbsxd = true
+        while orbsxd do
             wait(0.0000000001) -- Espera 1 segundo antes de executar o próximo loop
         
             -- Encontra o jogador
@@ -166,7 +167,7 @@ farmtab:Toggle("Auto Collect Orbs", "Collects Orbs automatically.", false, funct
             end
         end
     else
-        orbslol = false
+        orbsxd = false
     end
     
 end)
@@ -199,6 +200,14 @@ else
 afk = false
 end
 end)
+
+
+
+
+
+
+
+
 
 
    
