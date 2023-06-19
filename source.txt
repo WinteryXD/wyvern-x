@@ -1,6 +1,8 @@
 loadstring(game:HttpGet("https://raw.githubusercontent.com/WinteryXD/wyvern-x/main/thing.lua"))()
 
 
+
+
 -- // Move o GUI para PlayerGui \\ --
 
 local gui = game:GetService("CoreGui"):FindFirstChild("FluxLib")
@@ -34,7 +36,7 @@ local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scri
 
 _G.closeBind = Enum.KeyCode.P
 
-local win = lib:Window("Wyvern X", "My Discord: winteryyy_", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
+local win = lib:Window("Wyvern X", "(Premium)", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
 
 local farmtab = win:Tab("Farming", "http://www.roblox.com/asset/?id=6023426915") -- Logo is the link
 
@@ -71,7 +73,7 @@ if uwu then
 
         while uwu do 
             local Pets = GetPets()
-            local Coins = GetCoins('Mystic Mine' or 'Cyber Cavern')
+            local Coins = GetCoins('Mystic Mine')
             for i,v in next, Coins do
                 if workspace.__THINGS.Coins:FindFirstChild(i) and _G.AutoFarm then 
                     for _,Pet in next, Pets do 
@@ -84,7 +86,7 @@ if uwu then
                             print("Auto-Farm: Off")
                             end
                         end)
-                        task.wait(0.00001)
+                        task.wait(0.0001)
             end
         end
     end
@@ -145,8 +147,7 @@ end)
 farmtab:Toggle("Auto Collect Orbs", "Collects Orbs automatically.", false, function(orbslol) -- t can be anything, choose false or true for what is the value in default
 
     if orbslol then
-    orbsxd = true
-        while orbsxd do
+        while orbslol do
             wait(0.0000000001) -- Espera 1 segundo antes de executar o próximo loop
         
             -- Encontra o jogador
@@ -168,7 +169,7 @@ farmtab:Toggle("Auto Collect Orbs", "Collects Orbs automatically.", false, funct
             end
         end
     else
-        orbsxd = false
+        orbslol = false
     end
     
 end)
@@ -178,37 +179,20 @@ farmtab:Line()
 
 local extrastab = win:Tab("Extras", "http://www.roblox.com/asset/?id=6023426915")
 
-extrastab:Toggle("Anti-AFK", "Prevents you from getting kicked by jumping every 60 seconds.", false, function(antiafk) -- t can be anything, choose false or true for what is the value in default
-
-if antiafk then
-afk = true
-	while afk do
-
--- Obtenha o personagem do jogador
-local player = game.Players.LocalPlayer
-local character = player.Character or player.CharacterAdded:Wait()
-local humanoid = character:WaitForChild("Humanoid")
-
-while afk do
-    -- Faça o personagem pular
-    humanoid:ChangeState(Enum.HumanoidStateType.Jumping)
-    
-    -- Aguarde 1 segundo
-    wait(60)
-end
-end
-else
-afk = false
-end
+extrastab:Toggle("Anti-AFK", "Prevents you from getting kicked by spoofing the right click of your mouse.", false, function(antiafk) -- t can be anything, choose false or true for what is the value in default
+	
+	if afk then
+	afkk = true
+		while afkk do
+		
+		game:service'Players'.LocalPlayer.Idled:connect(function()
+bb:CaptureController()bb:ClickButton2(Vector2.new())
+	end)
+	end
+	else
+	afkk = false
+	end
+		
+	
 end)
-
-
-
-
-
-
-
-
-
-
    
