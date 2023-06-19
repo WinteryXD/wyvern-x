@@ -36,10 +36,11 @@ local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scri
 
 _G.closeBind = Enum.KeyCode.P
 
-local win = lib:Window("Wyvern X", "(Premium)", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
+local win = lib:Window("Wyvern X", "(v1.2-Premium)", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
 
 local farmtab = win:Tab("Farming", "http://www.roblox.com/asset/?id=6023426915") -- Logo is the link
 
+local guistab = win:Tab("GUIs", "http://www.roblox.com/asset/?id=6023426915")
 
 farmtab:Toggle("Auto-Farm", "Automatically farms the best unlocked area of the Diamond Mine.", false, function(uwu) -- t can be anything, choose false or true for what is the value in default
 
@@ -196,3 +197,145 @@ bb:CaptureController()bb:ClickButton2(Vector2.new())
 	
 end)
    
+
+
+
+
+
+-- // GUIs TAB \\ --
+
+local bank = game.Players.LocalPlayer.PlayerGui.Bank
+local index = game:GetService("Players").LocalPlayer.PlayerGui.Collection
+local hugemachine = game:GetService("Players").LocalPlayer.PlayerGui.HugeMachine
+local golden = game:GetService("Players").LocalPlayer.PlayerGui.Golden
+local dm = game:GetService("Players").LocalPlayer.PlayerGui.DarkMatter
+local dc = game:GetService("Players").LocalPlayer.PlayerGui.Daycare
+local em = game:GetService("Players").LocalPlayer.PlayerGui.EvolvePets
+local fm = game:GetService("Players").LocalPlayer.PlayerGui.FusePets
+local merchant = game:GetService("Players").LocalPlayer.PlayerGui.Merchant
+local qs = game:GetService("Players").LocalPlayer.PlayerGui.QuestShop
+local sb = game:GetService("Players").LocalPlayer.PlayerGui.ServerBoosts
+local mb = game:GetService("Players").LocalPlayer.PlayerGui.Mailbox
+local ep = game:GetService("Players").LocalPlayer.PlayerGui.EnchantPets
+
+guistab:Label('You need to stay near the machine. (Except Server Boosts)')
+
+guistab:Line()
+
+
+guistab:Button("Open Bank", "Opens the Bank GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if bank.Enabled == false then
+		bank.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Pet Collection", "Opens the Pet Collection GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if index.Enabled == false then
+		index.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+
+guistab:Button("Open Huge Machine", "Opens the Huge Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if hugemachine.Enabled == false then
+		hugemachine.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Golden Machine", "Opens the Golden Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if golden.Enabled == false then
+		golden.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Dark Matter Machine", "Opens the Dark Matter Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if dm.Enabled == false then
+		dm.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Daycare", "Opens the Daycare GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if dc.Enabled == false then
+		dc.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Evolve Machine", "Opens the Evolve Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if em.Enabled == false then
+		em.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Fuse Machine", "Opens the Fuse Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if fm.Enabled == false then
+		fm.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Merchant", "Opens the Travelling Merchant GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if merchant.Enabled == false then
+		merchant.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Quest Shop", "Opens the Quest Shop GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if qs.Enabled == false then
+		qs.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Server Boosts", "Opens the Server Boosts GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if sb.Enabled == false then
+		sb.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Mailbox", "Opens the Mailbox GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if mb.Enabled == false then
+		mb.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Enchanter", "Opens the Enchanter GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if ep.Enabled == false then
+		ep.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
