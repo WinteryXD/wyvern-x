@@ -34,7 +34,7 @@ local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scri
 
 _G.closeBind = Enum.KeyCode.P
 
-local win = lib:Window("Wyvern X", "(Premium)", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
+local win = lib:Window("Wyvern X", "Made by winteryyy_", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
 
 local farmtab = win:Tab("Farming", "http://www.roblox.com/asset/?id=6023426915") -- Logo is the link
 
