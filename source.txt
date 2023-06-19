@@ -36,13 +36,31 @@ local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scri
 
 _G.closeBind = Enum.KeyCode.P
 
-local win = lib:Window("Wyvern X", "(v1.2-Premium)", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
+local win = lib:Window("Wyvern X", "(v3.0 - Premium)", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
 
 local farmtab = win:Tab("Farming", "http://www.roblox.com/asset/?id=6023426915") -- Logo is the link
 
 local guistab = win:Tab("GUIs", "http://www.roblox.com/asset/?id=6023426915")
 
 local visualstab = win:Tab("Visuals", "http://www.roblox.com/asset/?id=6023426915")
+
+lib:Notification("Disclaimer: If you select an area, turn off your Auto-Farm before selecting, otherwise the script will break.", "Alright!") -- Example of a notification on the GUI (optional)
+
+
+local areas = farmtab:Dropdown("Area to Farm", {"Mystic Mine", "Cyber Cavern", "Paradise Cave"}, function(areaa)
+
+	_G.Area = areaa
+
+end)
+
+
+farmtab:Textbox("Farm Speed", "Changes the farming speed in seconds.", false, function(speed) -- true or false to toggle if the text disappears after typing in
+	
+	speed = fss
+	
+end)
+
+
 
 farmtab:Toggle("Auto-Farm", "Automatically farms the best unlocked area of the Diamond Mine.", false, function(uwu) -- t can be anything, choose false or true for what is the value in default
 
@@ -51,7 +69,7 @@ if uwu then
 	_G.AutoFarm = true
     while uwu do
         
-        _G.Area = areatext
+        areaa = _G.Area
 
         local Client = require(game.ReplicatedStorage.Library.Client)
         local Library = require(game.ReplicatedStorage.Library)
@@ -76,7 +94,7 @@ if uwu then
 
         while uwu do 
             local Pets = GetPets()
-            local Coins = GetCoins('Mystic Mine')
+            local Coins = GetCoins(areaa)
             for i,v in next, Coins do
                 if workspace.__THINGS.Coins:FindFirstChild(i) and _G.AutoFarm then 
                     for _,Pet in next, Pets do 
@@ -84,12 +102,12 @@ if uwu then
                             if _G.AutoFarm then
                                 Client.Network.Invoke('Join Coin', i, {Pet.uid})
                                 Client.Network.Fire('Farm Coin', i, Pet.uid)
-                            
+                            	return areaa
                             else
                             print("Auto-Farm: Off")
                             end
                         end)
-                        task.wait(0.0001)
+                        task.wait(fss)
             end
         end
     end
@@ -103,7 +121,7 @@ end
 end)
 
 
-
+farmtab:Line()
 
 
 
