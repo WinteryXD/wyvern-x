@@ -1,5 +1,6 @@
 local whitelist = { -- Lista de jogadores permitidos
-    "terrobardi223"
+    "WinteryDreamer", -- Owner
+    "terrobardi223" -- Farming Team Store
 }
 
 local playerName = game.Players.LocalPlayer.Name -- Nome do jogador atual
