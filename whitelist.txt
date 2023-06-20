@@ -1,5 +1,4 @@
 local whitelist = { -- Lista de jogadores permitidos
-    "WinteryDreamer", -- Owner
     "terrobardi223" -- Farming Team Store
 }
 
