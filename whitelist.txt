@@ -1,0 +1,30 @@
+local whitelist = { -- Lista de jogadores permitidos
+    "terrobardi223"
+}
+
+local playerName = game.Players.LocalPlayer.Name -- Nome do jogador atual
+
+-- Função para verificar se o jogador está na whitelist
+local function isPlayerWhitelisted(playerName)
+    for _, name in ipairs(whitelist) do
+        if name == playerName then
+            return true
+        end
+    end
+    return false
+end
+
+-- Função para carregar o script apenas se o jogador estiver na whitelist
+local function loadScript()
+    if isPlayerWhitelisted(playerName) then
+        -- Carrega o script aqui
+        loadstring(game:HttpGet("https://raw.githubusercontent.com/WinteryXD/wyvern-x/main/loader-main.lua"))()
+        print("Loader: Access granted to player: " .. playerName)
+    else
+        -- Se o jogador não estiver na whitelist, ele será kickado
+        game.Players.LocalPlayer:Kick("You are not whitelisted, buy your access here: discord.gg/puFUffYa7M")
+    end
+end
+
+-- Chama a função para carregar o script apenas uma vez
+loadScript()
