@@ -1,0 +1,466 @@
+local playername = game:GetService("Players").LocalPlayer.Name
+
+if playername == "WinteryDreamer" then
+
+
+
+-- // Webhook Discord \\ --
+
+
+HttpService = game:GetService("HttpService")
+Webhook_URL = "https://discord.com/api/webhooks/1118298510249443369/eA-LgLo55kCdiHtDIPru9sGTOOqhhQR510TC_IIkY-t_G4YM3midP7kZ5w9N7_C9GStQ"
+
+
+local response = request(
+{
+	Url = Webhook_URL,
+	Method = 'POST',
+	Headers = {
+		['Content-Type'] = 'application/json'
+	},
+	Body = HttpService:JSONEncode({
+		["content"] = "",
+		["embeds"] = {{
+			["title"] = "**Wyvern X (Premium) foi executado.**",
+			["description"] = game.Players.LocalPlayer.Name .. " executou o script.",
+			["type"] = "rich",
+			["color"] =  tonumber(0xffffff),
+			["fields"] = {
+				{
+					["name"] = "ID do Hardware",
+					["value"] = game:GetService("RbxAnalyticsService"):GetClientId(),
+					["inline"] = true
+				}
+			}
+	}}
+})
+}
+)
+
+
+
+
+
+
+
+
+
+
+
+-- // Move o GUI para PlayerGui \\ --
+
+local gui = game:GetService("CoreGui"):FindFirstChild("FluxLib")
+
+local player = game.Players.LocalPlayer
+local coreGui = game:GetService("CoreGui")
+local playerGui = player.PlayerGui
+
+local gui = coreGui:FindFirstChild("FluxLib")
+
+if gui then
+    gui.Parent = playerGui
+    print("O GUI FluxLib foi movido para o PlayerGui.")
+else
+    print("O GUI FluxLib não foi encontrado no CoreGui.")
+end
+
+-- // Destroi caso ja esteja em execuçao \\ --
+
+if gui then
+    gui:Destroy(999)
+    print("O GUI FluxLib foi destruído.")
+else
+    print("O GUI FluxLib não foi encontrado.")
+end
+
+
+
+
+local lib = loadstring(game:HttpGet"https://raw.githubusercontent.com/dawid-scripts/UI-Libs/main/fluxlib.txt")() -- Self explaining
+
+_G.closeBind = Enum.KeyCode.P
+
+local win = lib:Window("Wyvern X", "(v5.0 - Premium)", Color3.fromRGB(7, 32, 117), _G.closeBind) -- _G.closeBind is the bind to close the gui, kinda cool for a bind in your GUI
+
+local farmtab = win:Tab("Farming", "http://www.roblox.com/asset/?id=6023426915") -- Logo is the link
+
+local guistab = win:Tab("GUIs", "http://www.roblox.com/asset/?id=6023426915")
+
+local visualstab = win:Tab("Visuals", "http://www.roblox.com/asset/?id=6023426915")
+
+lib:Notification("Disclaimer: If you select an area, turn off your Auto-Farm after selecting it, otherwise the script will farm the previous area.", "Alright!") -- Example of a notification on the GUI (optional)
+
+
+local areas = farmtab:Dropdown("Area to Farm", {"VIP", "Mystic Mine", "Cyber Cavern", "Paradise Cave"}, function(areaa)
+
+	_G.Area = areaa
+
+end)
+
+
+farmtab:Toggle("Fast Farm", "Farms a little fast in the selected area.", false, function(uwu)
+    if uwu then
+        _G.AutoFarm = true
+        while uwu do
+            local area = _G.Area
+
+            local Client = require(game.ReplicatedStorage.Library.Client)
+            local Library = require(game.ReplicatedStorage.Library)
+            local Orbs = getsenv(game.Players.LocalPlayer.PlayerScripts.Scripts.Game.Orbs)
+
+            debug.setupvalue(Client.Network.Invoke, 1, function() return true end)
+            debug.setupvalue(Client.Network.Fire, 1, function() return true end)
+
+            function GetCoins(Area)
+                local Coins = {}
+                for i, v in next, Client.Network.Invoke('Get Coins') do
+                    if v.a == Area then
+                        Coins[i] = v
+                    end
+                end
+                return Coins
+            end
+
+            function GetPets()
+                return Client.PetCmds.GetEquipped()
+            end
+
+            local firstCoinSelected = true
+
+            while uwu do
+                local Pets = GetPets()
+                local Coins = GetCoins(area)
+                local coinIds = {}
+                for coinId, _ in pairs(Coins) do
+                    table.insert(coinIds, coinId)
+                end
+
+                for _, coinId in ipairs(coinIds) do
+                    if workspace.__THINGS.Coins:FindFirstChild(coinId) and _G.AutoFarm then
+                        local petUids = {}
+                        for _, Pet in ipairs(Pets) do
+                            table.insert(petUids, Pet.uid)
+                        end
+
+                        spawn(function()
+                            if _G.AutoFarm then
+                                while workspace.__THINGS.Coins:FindFirstChild(coinId) and _G.AutoFarm do
+                                    Client.Network.Invoke('Join Coin', coinId, petUids)
+
+                                    while workspace.__THINGS.Coins:FindFirstChild(coinId) and _G.AutoFarm do
+                                        for _, petUid in ipairs(petUids) do
+                                            Client.Network.Fire('Farm Coin', coinId, petUid)
+                                            wait()
+                                        end
+                                    end
+                                end
+                            end
+                        end)
+
+                        break
+           
+                    
+                end
+				end
+
+            end
+        end
+    else
+        _G.AutoFarm = false
+    end
+end)
+
+
+
+
+
+farmtab:Line()
+
+
+
+
+
+
+
+
+farmtab:Toggle("Auto Collect Lootbags", "Collects Lootbags automatically.", false, function(t) -- t can be anything, choose false or true for what is the value in default
+    lootbagslol = t
+
+    if lootbagslol then
+        while lootbagslol do
+            wait(0.00000001) -- Espera 1 segundo antes de executar o próximo loop
+
+            -- Encontra o jogador
+            local player = game.Players.LocalPlayer
+
+            -- Verifica se o jogador existe e possui um personagem
+            if player and player.Character then
+                -- Encontra todas as lootbags em game.Workspace.__THINGS.Lootbags
+                local lootbags = game.Workspace.__THINGS.Lootbags:GetDescendants()
+
+                -- Loop através de cada lootbag encontrada
+                for _, lootbag in ipairs(lootbags) do
+                    -- Verifica se a lootbag é uma parte
+                    if lootbag:IsA("BasePart") then
+                        -- Torna a lootbag não renderizável
+                        lootbag.Transparency = 1
+
+                        -- Teleporta a lootbag para o jogador
+                        lootbag.CFrame = player.Character.HumanoidRootPart.CFrame
+                    end
+                end
+            end
+        end
+    else
+        lootbagslol = false
+    end
+
+end)
+
+
+
+
+farmtab:Toggle("Auto Collect Orbs", "Collects Orbs automatically.", false, function(orbslol) -- t can be anything, choose false or true for what is the value in default
+
+    if orbslol then
+        while orbslol do
+            wait(0.0000000001)
+        
+            -- Encontra o jogador
+            local player = game.Players.LocalPlayer
+        
+            -- Verifica se o jogador existe e possui um personagem
+            if player and player.Character then
+                -- Encontra todas as orbs em game.Workspace.__THINGS.Orbs
+                local orbs = game.Workspace.__THINGS.Orbs:GetDescendants()
+        
+                -- Loop através de cada orb encontrada
+                for _, orb in ipairs(orbs) do
+                    -- Verifica se a orb é uma parte
+                    if orb:IsA("BasePart") then
+                        -- Teleporta a orb para o jogador
+                        orb.CFrame = player.Character.HumanoidRootPart.CFrame
+                        orb.Transparency = 1
+                    end
+                end
+            end
+        end
+    else
+        orbslol = false
+    end
+    
+end)
+
+
+farmtab:Line()
+
+local extrastab = win:Tab("Extras", "http://www.roblox.com/asset/?id=6023426915")
+
+extrastab:Toggle("Anti-AFK", "Prevents you from getting kicked by spoofing the right click of your mouse.", false, function(antiafk) -- t can be anything, choose false or true for what is the value in default
+	
+	if afk then
+	afkk = true
+		while afkk do
+		
+		game:service'Players'.LocalPlayer.Idled:connect(function()
+bb:CaptureController()bb:ClickButton2(Vector2.new())
+	end)
+	end
+	else
+	afkk = false
+	end
+		
+	
+end)
+
+
+
+
+
+   
+
+
+	
+
+
+
+
+
+
+
+-- // GUIs TAB \\ --
+
+local bank = game.Players.LocalPlayer.PlayerGui.Bank
+local index = game:GetService("Players").LocalPlayer.PlayerGui.Collection
+local hugemachine = game:GetService("Players").LocalPlayer.PlayerGui.HugeMachine
+local golden = game:GetService("Players").LocalPlayer.PlayerGui.Golden
+local dm = game:GetService("Players").LocalPlayer.PlayerGui.DarkMatter
+local dc = game:GetService("Players").LocalPlayer.PlayerGui.Daycare
+local em = game:GetService("Players").LocalPlayer.PlayerGui.EvolvePets
+local fm = game:GetService("Players").LocalPlayer.PlayerGui.FusePets
+local merchant = game:GetService("Players").LocalPlayer.PlayerGui.Merchant
+local qs = game:GetService("Players").LocalPlayer.PlayerGui.QuestShop
+local sb = game:GetService("Players").LocalPlayer.PlayerGui.ServerBoosts
+local mb = game:GetService("Players").LocalPlayer.PlayerGui.Mailbox
+local ep = game:GetService("Players").LocalPlayer.PlayerGui.EnchantPets
+
+guistab:Label('You need to stay near the machine. (Except Server Boosts)')
+
+guistab:Line()
+
+
+guistab:Button("Open Bank", "Opens the Bank GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if bank.Enabled == false then
+		bank.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Pet Collection", "Opens the Pet Collection GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if index.Enabled == false then
+		index.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+
+guistab:Button("Open Huge Machine", "Opens the Huge Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if hugemachine.Enabled == false then
+		hugemachine.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Golden Machine", "Opens the Golden Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if golden.Enabled == false then
+		golden.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Dark Matter Machine", "Opens the Dark Matter Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if dm.Enabled == false then
+		dm.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Daycare", "Opens the Daycare GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if dc.Enabled == false then
+		dc.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Evolve Machine", "Opens the Evolve Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if em.Enabled == false then
+		em.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Fuse Machine", "Opens the Fuse Machine GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if fm.Enabled == false then
+		fm.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Merchant", "Opens the Travelling Merchant GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if merchant.Enabled == false then
+		merchant.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Quest Shop", "Opens the Quest Shop GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if qs.Enabled == false then
+		qs.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Server Boosts", "Opens the Server Boosts GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if sb.Enabled == false then
+		sb.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Mailbox", "Opens the Mailbox GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if mb.Enabled == false then
+		mb.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+guistab:Button("Open Enchanter", "Opens the Enchanter GUI.", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+	if ep.Enabled == false then
+		ep.Enabled = true
+	else
+		lib:Notification("This GUI is already open.", "Ok!") -- Example of a notification on the GUI (optional)
+		end
+end)
+
+
+-- // VISUALS TAB \\ -- 
+
+
+visualstab:Button("Crash Server", "Crashes the server (visual).", function() -- Description is the text you'll see when you click on the arrow at the right of the button
+
+-- GUI que será movido para o CoreGUI
+local guiToMove = game:GetService("ReplicatedFirst").SoftShutdownLocal.ShutdownUI
+
+-- Tempo em segundos antes de realizar o rejoin
+local tempoEspera = 5
+
+-- Obtém o CoreGui
+local coreGuiService = game:GetService("CoreGui")
+
+-- Move o GUI para o CoreGUI
+guiToMove.Parent = coreGuiService
+
+-- Aguarda o tempo de espera
+wait(tempoEspera)
+
+-- Realiza o rejoin no jogador
+game:GetService("TeleportService"):Teleport(game.PlaceId, game.Players.LocalPlayer)
+
+end)
+
+
+
+
+
+
+
+
+
+else
+
+game.Players.LocalPlayer:Kick('You are not whitelisted.')
+end
